@@ -56,7 +56,7 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 |   $database variable.
 |   Example: $database['another_example'] = array('key' => 'value')
 */
-GIT 
+
 $database['main'] = array(
     'driver'   => 'mysql',
     'hostname' => getenv('DB_HOST') ?: 'sql12.freesqldatabase.com',
