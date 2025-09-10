@@ -56,30 +56,17 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 |   $database variable.
 |   Example: $database['another_example'] = array('key' => 'value')
 */
-/*
+GIT 
 $database['main'] = array(
-    'driver'	=> 'mysql',
-    'hostname'	=> 'sql12.freesqldatabase.com',
-    'port'		=> '3306',
-    'username'	=> 'root',
-    'password'	=> '',
-    'database'	=> 'mockdata',
-    'charset'	=> 'utf8mb4',
-    'dbprefix'	=> '',
-    // Optional for SQLite
-    'path'      => ''
+    'driver'   => 'mysql',
+    'hostname' => getenv('DB_HOST') ?: 'sql12.freesqldatabase.com',
+    'port'     => getenv('DB_PORT') ?: '3306',
+    'username' => getenv('DB_USER') ?: 'sql12798078',
+    'password' => getenv('DB_PASS') ?: 'fPbB4m5QGt',
+    'database' => getenv('DB_NAME') ?: 'sql12798078',
+    'charset'  => 'utf8mb4',
+    'dbprefix' => ''
 );
-*/
-$database['main'] = array(
-    'driver'    => 'mysql',
-    'hostname'  => 'sql12.freesqldatabase.com',
-    'port'      => '3306',
-    'username'  => 'sql12798078',       // ← ito yung DB user mo
-    'password'  => 'fPbB4m5QGt',        // ← ito yung DB password mo
-    'database'  => 'sql12798078',       // ← ito yung DB name mo
-    'charset'   => 'utf8mb4',
-    'dbprefix'  => '',
-    // Optional for SQLite
-    'path'      => ''
-);
+
+
 ?>
