@@ -6,17 +6,59 @@ class Students_Controller extends Controller {
 
    
 
-    
-
     public function get_all(){
-     
-        $students = $this->Students_Model->all();
+        
+        $query    = trim($this->io->get('q')) ?: '';
+        $page     = (int) $this->io->get('page') ?: 1;
+        $per_page = (int) $this->io->get('per_page') ?: 10; 
+        if ($per_page <= 0) { $per_page = 10; }
+        if ($page <= 0) { $page = 1; }
 
-       $this->call->view('/crudORM/lists', ['students' => $students]);
+        
+        $students_all = $this->Students_Model->all();
 
 
+        $get_field = function($row, $key) {
+            if (is_array($row)) return isset($row[$key]) ? $row[$key] : '';
+            if (is_object($row)) return isset($row->$key) ? $row->$key : '';
+            return '';
+        };
+
+
+        if ($query !== '') {
+            $q_lower = mb_strtolower($query);
+            $students_filtered = array_values(array_filter($students_all, function($s) use ($q_lower, $get_field) {
+                $firstname = mb_strtolower($get_field($s, 'firstname'));
+                $lastname  = mb_strtolower($get_field($s, 'lastname'));
+                $email     = mb_strtolower($get_field($s, 'email'));
+                return (mb_strpos($firstname, $q_lower) !== false)
+                    || (mb_strpos($lastname, $q_lower) !== false)
+                    || (mb_strpos($email, $q_lower) !== false);
+            }));
+        } else {
+            $students_filtered = $students_all;
+        }
+
+        $total_items = count($students_filtered);
+        $total_pages = (int) max(1, ceil($total_items / $per_page));
+        if ($page > $total_pages) { $page = $total_pages; }
+        $offset = ($page - 1) * $per_page;
+        $students_page = array_slice($students_filtered, $offset, $per_page);
+
+    
+        $data = [
+            'students'    => $students_page,
+            'page'        => $page,
+            'per_page'    => $per_page,
+            'total_items' => $total_items,
+            'total_pages' => $total_pages,
+            'query'       => $query,
+        ];
+
+        $this->call->view('/crudORM/lists', $data);
     }
 
+      
       
 
  public function create()
