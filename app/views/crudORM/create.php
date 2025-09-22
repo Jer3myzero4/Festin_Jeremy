@@ -58,7 +58,7 @@
           </form>
         </div>
       </div>
-      <p class="text-center text-sm text-gray-500 mt-3">Simple CRUD form styled with Tailwind CSS</p>
+      <p class="text-center text-sm text-gray-500 mt-3">Create student details</p>
     </div>
   </div>
 </body>
